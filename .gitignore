@@ -1,0 +1,48 @@
+# Node.js
+express-service/node_modules/
+web-interface/node_modules/
+npm-debug.log
+yarn-error.log
+
+# Environment variables
+*.env
+
+# Symfony
+###> symfony/framework-bundle ###
+/symfony-service/.env.local
+/symfony-service/.env.local.php
+/symfony-service/.env.*.local
+/symfony-service/.env
+/symfony-service/config/secrets/prod/prod.decrypt.private.php
+/symfony-service/public/bundles/
+/symfony-service/var/
+/symfony-service/vendor/
+###< symfony/framework-bundle ###
+
+###> lexik/jwt-authentication-bundle ###
+/symfony-service/config/jwt/*.pem
+###< lexik/jwt-authentication-bundle ###
+
+###> symfony/phpunit-bridge ###
+/symfony-service/.phpunit.result.cache
+/symfony-service/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/symfony-service/phpunit.xml
+/symfony-service/.phpunit.result.cache
+###< phpunit/phpunit ###
+/symfony-service/public/uploads/*
+# /public/uploads/* DEV
+
+# Logs
+logs/
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Ignore Docker files
+docker-compose.override.yml

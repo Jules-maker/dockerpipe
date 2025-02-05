@@ -2,8 +2,8 @@ const express = require('express');
 const admin = express();
 const dotenv = require('dotenv');
 const db = require('./db');
-const user = require('./user');
-// const cors = require('cors');
+const user = require('./recipe');
+const cors = require('cors');
 const bodyParser = require('body-parser');
 
 dotenv.config();
@@ -12,11 +12,11 @@ const port = process.env.PORT;
 
 admin.use(bodyParser.json());
 
-// admin.use(cors(
-//     {
-//         origin: '*', // Autoriser toutes les requêtes
-//     }  
-// ));
+admin.use(cors(
+    {
+        origin: '*', // Autoriser toutes les requêtes
+    }  
+));
 
 
 
@@ -28,7 +28,7 @@ admin.get('/ping', (req, res) => {
     res.send('pong admin');
     });
 
-admin.use('/user', user);
+admin.use('/recipe', recipe);
 
 
 

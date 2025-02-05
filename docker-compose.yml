@@ -48,6 +48,7 @@ services:
       MYSQL_DATABASE: recipe_db
     volumes:
       - db_data:/var/lib/mysql
+      - db_data:/var/log/mysql
     networks:
       - api
   phpmyadmin:

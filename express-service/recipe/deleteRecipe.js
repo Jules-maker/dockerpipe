@@ -3,19 +3,23 @@ const router = express.Router();
 const db = require('../db'); // Assuming you have a db module to handle database operations
 
 module.exports = async (req, res) => {
-    const { name } = req.body.name;
+    const { id } = req.params;
 
-    if (!name || !email || !password) {
-        return res.status(400).json({ error: 'Tous les champs sont requis' });
+    if (!id) {
+        return res.status(400).json({ error: 'ID recette requis' });
     }
 
     try {
-        const query = 'INSERT INTO user (name) VALUES (?)';
-        const params = [name];
+        const query = 'DELETE FROM recipe WHERE id = ?';
+        const params = [id];
 
         const [result] = await db.query(query, params);
 
-        res.status(201).json({ message: 'Utilisateur créé avec succès', userId: result.insertId });
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ error: 'Utilisateur non trouvé' });
+        }
+
+        res.json({ message: 'Utilisateur supprimé avec succès' });
     } catch (error) {
         console.error('Erreur MySQL :', error);
         res.status(500).json({ error: 'Erreur serveur' });

@@ -3,10 +3,10 @@ const router = express.Router();
 const db = require('../db'); // Assuming you have a db module to handle database operations
 
 module.exports = async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.params.id;
 
   try {
-    let query = 'SELECT * FROM user';
+    let query = 'SELECT * FROM recipe';
     let params = [];
 
     if (id) {
@@ -17,7 +17,7 @@ module.exports = async (req, res) => {
     const [rows] = await db.query(query, params);
 
     if (rows.length === 0) {
-      return res.status(404).json({ error: 'Utilisateur non trouvé' });
+      return res.status(404).json({ error: 'Recette non trouvé' });
     }
 
     res.json(id ? rows[0] : rows);

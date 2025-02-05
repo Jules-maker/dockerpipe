@@ -1,6 +1,59 @@
+"use client";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function Home() {
+  const [addRecipeName, setAddRecipeName] = useState("");
+  const [modifyRecipeId, setModifyRecipeId] = useState("");
+  const [modifyRecipeName, setModifyRecipeName] = useState("");
+  const [deleteRecipeId, setDeleteRecipeId] = useState("");
+
+  const handleAddRecipe = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:3006/recipe", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: addRecipeName }),
+      });
+      const data = await response.json();
+      console.log("Add Recipe:", data);
+    } catch (error) {
+      console.error("Error adding recipe:", error);
+    }
+  };
+
+  const handleModifyRecipe = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:3006/recipe/${modifyRecipeId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name: modifyRecipeName }),
+      });
+      const data = await response.json();
+      console.log("Modify Recipe:", data);
+    } catch (error) {
+      console.error("Error modifying recipe:", error);
+    }
+  };
+
+  const handleDeleteRecipe = async (e) => {
+    e.preventDefault();
+    try {
+      await fetch(`http://localhost:3006/recipe/${deleteRecipeId}`, {
+        method: "DELETE",
+      });
+      console.log("Delete Recipe:", deleteRecipeId);
+    } catch (error) {
+      console.error("Error deleting recipe:", error);
+    }
+  };
+
   return (
     <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
@@ -48,6 +101,55 @@ export default function Home() {
             Read our docs
           </a>
         </div>
+
+        <form onSubmit={handleAddRecipe} className="flex flex-col gap-4">
+          <h2>Add Recipe</h2>
+          <input
+            type="text"
+            placeholder="Recipe Name"
+            value={addRecipeName}
+            onChange={(e) => setAddRecipeName(e.target.value)}
+            className="border p-2 rounded"
+          />
+          <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+            Add Recipe
+          </button>
+        </form>
+
+        <form onSubmit={handleModifyRecipe} className="flex flex-col gap-4">
+          <h2>Modify Recipe</h2>
+          <input
+            type="text"
+            placeholder="Recipe ID"
+            value={modifyRecipeId}
+            onChange={(e) => setModifyRecipeId(e.target.value)}
+            className="border p-2 rounded"
+          />
+          <input
+            type="text"
+            placeholder="New Recipe Name"
+            value={modifyRecipeName}
+            onChange={(e) => setModifyRecipeName(e.target.value)}
+            className="border p-2 rounded"
+          />
+          <button type="submit" className="bg-yellow-500 text-white p-2 rounded">
+            Modify Recipe
+          </button>
+        </form>
+
+        <form onSubmit={handleDeleteRecipe} className="flex flex-col gap-4">
+          <h2>Delete Recipe</h2>
+          <input
+            type="text"
+            placeholder="Recipe ID"
+            value={deleteRecipeId}
+            onChange={(e) => setDeleteRecipeId(e.target.value)}
+            className="border p-2 rounded"
+          />
+          <button type="submit" className="bg-red-500 text-white p-2 rounded">
+            Delete Recipe
+          </button>
+        </form>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
         <a

@@ -45,4 +45,4 @@ temp/
 *.tmp
 
 # Ignore Docker files
-docker-compose.override.yml
+# docker-compose.override.yml

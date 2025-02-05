@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  laravel:
+    build:
+      context: ./symfony-service
+      dockerfile: Dockerfile
+    image: laravel-app
+    container_name: laravel-app
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./symfony-service:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - DB_CONNECTION=mysql
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_DATABASE=recipe_db
+      - DB_USERNAME=root
+      - DB_PASSWORD=root
+
+  express:
+    build:
+      context: ./express-service
+      dockerfile: Dockerfile
+    image: express-app
+    container_name: express-app
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./express-service:/usr/src/app
+
+  db:
+    image: mysql:5.7
+    container_name: mysql-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: recipe_db
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:

@@ -1,14 +1,14 @@
 version: '3.8'
 
 services:
-  laravel:
+  symfony:
     build:
       context: ./symfony-service
       dockerfile: Dockerfile
-    image: laravel-app
-    container_name: laravel-app
+    image: symfony-app
+    container_name: symfony-app
     ports:
-      - "8000:8000"
+      - "8080:80"
     volumes:
       - ./symfony-service:/var/www/html
     depends_on:
@@ -20,6 +20,8 @@ services:
       - DB_DATABASE=recipe_db
       - DB_USERNAME=root
       - DB_PASSWORD=root
+    networks:
+      - api
 
   express:
     build:
@@ -28,9 +30,13 @@ services:
     image: express-app
     container_name: express-app
     ports:
-      - "3000:3000"
+      - "3006:3006"
     volumes:
       - ./express-service:/usr/src/app
+    env_file:
+      - ./express-service/.env
+    networks:
+      - api
 
   db:
     image: mysql:5.7
@@ -42,6 +48,31 @@ services:
       MYSQL_DATABASE: recipe_db
     volumes:
       - db_data:/var/lib/mysql
+    networks:
+      - api
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: phpmyadminmulti
+    restart: always
+    depends_on:
+      - db
+    ports:
+    - "8081:80"
+    networks:
+      - api  
+  web-interface:
+    build:
+      context: ./web-interface
+      dockerfile: Dockerfile
+    image: web-interface-app
+    container_name: web-interface-app
+    ports:
+      - "3001:3001"
+    networks:
+      - api
 
 volumes:
   db_data:
+
+networks:
+  api:

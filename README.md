@@ -1,12 +1,12 @@
 # Project Overview
 
-This is a multi-service application that consists of three main components: a Laravel service, an Express.js service, and a web interface built with React. Each service is containerized using Docker, and they communicate with each other through a defined network.
+This is a multi-service application that consists of three main components: a symfony service, an Express.js service, and a web interface built with React. Each service is containerized using Docker, and they communicate with each other through a defined network.
 
 ## Directory Structure
 
 ```
 my-multi-service-app
-├── laravel-service          # Laravel service for backend API
+├── symfony-service          # symfony service for backend API
 │   ├── app                  # Core application logic
 │   ├── bootstrap             # Bootstrapping files
 │   ├── config               # Configuration files
@@ -43,7 +43,7 @@ my-multi-service-app
 
 ## Services
 
-1. **Laravel Service**: This service handles the backend logic and API endpoints. It is built using the Laravel framework and includes all necessary configurations, routes, and database interactions.
+1. **symfony Service**: This service handles the backend logic and API endpoints. It is built using the symfony framework and includes all necessary configurations, routes, and database interactions.
 
 2. **Express.js Service**: This service provides additional backend functionality using Express.js. It handles specific routes and requests, interacting with the database as needed.
 

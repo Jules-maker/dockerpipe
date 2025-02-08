@@ -1,8 +1,8 @@
 const express = require('express');
-const admin = express();
+const app = express();
 const dotenv = require('dotenv');
 const db = require('./db');
-const user = require('./recipe');
+const recipe = require('./recipe');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
@@ -10,9 +10,9 @@ dotenv.config();
 const port = process.env.PORT;
 
 
-admin.use(bodyParser.json());
+app.use(bodyParser.json());
 
-admin.use(cors(
+app.use(cors(
     {
         origin: '*', // Autoriser toutes les requêtes
     }  
@@ -21,14 +21,14 @@ admin.use(cors(
 
 
 
-admin.get('/', (req, res) => {
-  res.send('Hello World admin!');
+app.get('/', (req, res) => {
+  res.send('Hello World app!');
 });
-admin.get('/ping', (req, res) => {
-    res.send('pong admin');
+app.get('/ping', (req, res) => {
+    res.send('pong app');
     });
 
-admin.use('/recipe', recipe);
+app.use('/recipe', recipe);
 
 
 
@@ -69,6 +69,6 @@ admin.use('/recipe', recipe);
 
 
 
-admin.listen(port, () => {
+app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
 });

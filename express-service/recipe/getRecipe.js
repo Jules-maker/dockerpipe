@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db'); // Assuming you have a db module to handle database operations
 
 module.exports = async (req, res) => {
-  const { id } = req.params.id;
+  const  id  = req.query.id;
 
   try {
     let query = 'SELECT * FROM recipe';

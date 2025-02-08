@@ -3,7 +3,7 @@ const router = express.Router();
 const db = require('../db'); // Assuming you have a db module to handle database operations
 
 module.exports = async (req, res) => {
-    const { name } = req.body.name;
+    const { name } = req.body;
 
     if (!name) {
         return res.status(400).json({ error: 'Tous les champs sont requis' });

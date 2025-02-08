@@ -7,6 +7,9 @@ export default function Home() {
   const [modifyRecipeId, setModifyRecipeId] = useState("");
   const [modifyRecipeName, setModifyRecipeName] = useState("");
   const [deleteRecipeId, setDeleteRecipeId] = useState("");
+  const [feedbackMessage, setFeedbackMessage] = useState("");
+  const [modifyFeedbackMessage, setModifyFeedbackMessage] = useState("");
+  const [deleteFeedbackMessage, setDeleteFeedbackMessage] = useState("");
 
   const handleAddRecipe = async (e) => {
     e.preventDefault();
@@ -19,8 +22,13 @@ export default function Home() {
         body: JSON.stringify({ name: addRecipeName }),
       });
       const data = await response.json();
-      console.log("Add Recipe:", data);
+      if (response.ok) {
+        setFeedbackMessage("Recipe added successfully!");
+      } else {
+        setFeedbackMessage(`Error: ${data.error}`);
+      }
     } catch (error) {
+      setFeedbackMessage("Error adding recipe.");
       console.error("Error adding recipe:", error);
     }
   };
@@ -36,8 +44,13 @@ export default function Home() {
         body: JSON.stringify({ name: modifyRecipeName }),
       });
       const data = await response.json();
-      console.log("Modify Recipe:", data);
+      if (response.ok) {
+        setModifyFeedbackMessage("Recipe modified successfully!");
+      } else {
+        setModifyFeedbackMessage(`Error: ${data.error}`);
+      }
     } catch (error) {
+      setModifyFeedbackMessage("Error modifying recipe.");
       console.error("Error modifying recipe:", error);
     }
   };
@@ -45,11 +58,17 @@ export default function Home() {
   const handleDeleteRecipe = async (e) => {
     e.preventDefault();
     try {
-      await fetch(`http://localhost:3006/recipe/${deleteRecipeId}`, {
+      const response = await fetch(`http://localhost:3006/recipe/${deleteRecipeId}`, {
         method: "DELETE",
       });
-      console.log("Delete Recipe:", deleteRecipeId);
+      if (response.ok) {
+        setDeleteFeedbackMessage("Recipe deleted successfully!");
+      } else {
+        const data = await response.json();
+        setDeleteFeedbackMessage(`Error: ${data.error}`);
+      }
     } catch (error) {
+      setDeleteFeedbackMessage("Error deleting recipe.");
       console.error("Error deleting recipe:", error);
     }
   };
@@ -114,6 +133,9 @@ export default function Home() {
           <button type="submit" className="bg-blue-500 text-white p-2 rounded">
             Add Recipe
           </button>
+          {feedbackMessage && (
+            <p className="mt-2 text-sm text-green-600">{feedbackMessage}</p>
+          )}
         </form>
 
         <form onSubmit={handleModifyRecipe} className="flex flex-col gap-4">
@@ -135,6 +157,9 @@ export default function Home() {
           <button type="submit" className="bg-yellow-500 text-white p-2 rounded">
             Modify Recipe
           </button>
+          {modifyFeedbackMessage && (
+            <p className="mt-2 text-sm text-green-600">{modifyFeedbackMessage}</p>
+          )}
         </form>
 
         <form onSubmit={handleDeleteRecipe} className="flex flex-col gap-4">
@@ -149,6 +174,9 @@ export default function Home() {
           <button type="submit" className="bg-red-500 text-white p-2 rounded">
             Delete Recipe
           </button>
+          {deleteFeedbackMessage && (
+            <p className="mt-2 text-sm text-green-600">{deleteFeedbackMessage}</p>
+          )}
         </form>
       </main>
       <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">

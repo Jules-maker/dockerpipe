@@ -20,7 +20,7 @@ COPY . .
 # RUN chown -R appuser:appgroup /app
 
 # Switch to the non-root user
-USER appuser
+# USER appuser
 
 # Build the Next.js application
 RUN npm run build

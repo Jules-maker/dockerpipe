@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
 const db = require('../db'); // Assuming you have a db module to handle database operations
+
 module.exports = async (req, res) => {
-    const { id, name } = req.body;
+    const { id } = req.params;
+    const { name } = req.body;
 
     if (!id || !name) {
         return res.status(400).json({ error: 'Tous les champs sont requis' });

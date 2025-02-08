@@ -8,8 +8,8 @@ WORKDIR /app
 COPY package*.json ./
 
 # Protect the application from the most common security risks
-RUN useradd -m appuser
-USER appuser
+# RUN useradd -m appuser
+# USER appuser
 
 # Install dependencies
 RUN npm install
@@ -21,4 +21,4 @@ COPY . .
 EXPOSE 3005
 
 # Command to run the application
-CMD ["node", "admin.js"]
+CMD ["node", "app.js"]

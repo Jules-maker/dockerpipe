@@ -26,6 +26,8 @@ RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd zip curl 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
+# Set ServerName to suppress the warning
+RUN echo "ServerName symfony-app.local" >> /etc/apache2/apache2.conf
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
